@@ -132,7 +132,6 @@ void test_Insitution_reverse_will_reverse_the_order_of_the_input_Linkedlist()
 	free(testList2);
 }
 
-
 void test_Institution_select_will_filter_out_specific_type()
 {
 	LinkedList * testList1 = malloc(sizeof(LinkedList));
@@ -149,24 +148,61 @@ void test_Institution_select_will_filter_out_specific_type()
 	element3->type=University;
 	element4->type=College;
 	
+	//Try work with two elements.
 	testList1->head = element1;
 	element1->next = element2;
-	element2->next=element3;
-	element3->next=element4;
-	element4->next=NULL;
+	element2->next =NULL;
 	
-	InstitutionType Type =College;
+	InstitutionType type =College;
 	
 	List_removeHead_ExpectAndReturn(testList1,element1);
 	List_removeHead_ExpectAndReturn(testList1,element2);
-	List_addTail(testList2,element2);
+	List_addTail_Expect(testList2,element2);
+	List_removeHead_ExpectAndReturn(testList1,NULL);
+
+	
+	Institution_select(testList1,testList2,&type,isUniversityCollege);
+	
+	
+	//Increase the element to three.
+	
+	testList1->head = element1;
+	element1->next = element2;
+	element2->next = element3;
+	element3->next = NULL;
+	
+	
+	List_removeHead_ExpectAndReturn(testList1,element1);
+	List_removeHead_ExpectAndReturn(testList1,element2);
+	List_addTail_Expect(testList2,element2);
+	List_removeHead_ExpectAndReturn(testList1,element3);
+	List_removeHead_ExpectAndReturn(testList1,NULL);
+
+	
+	Institution_select(testList1,testList2,&type,isUniversityCollege);
+	
+	
+	//Increase to four.
+	
+		//Increase the element to three.
+	
+	testList1->head = element1;
+	element1->next = element2;
+	element2->next = element3;
+	element3->next = element4;
+	element4->next=NULL;
+	
+	
+	List_removeHead_ExpectAndReturn(testList1,element1);
+	List_removeHead_ExpectAndReturn(testList1,element2);
+	List_addTail_Expect(testList2,element2);
 	List_removeHead_ExpectAndReturn(testList1,element3);
 	List_removeHead_ExpectAndReturn(testList1,element4);
-	List_addTail(testList2,element4);
+	List_addTail_Expect(testList2,element4);
 	List_removeHead_ExpectAndReturn(testList1,NULL);
+
 	
-	Institution_select(testList1,testList2,&Type,isUniversityCollege);
-	
+	Institution_select(testList1,testList2,&type,isUniversityCollege);
 	free(element1);
 	free(element2);
 	free(element3);
@@ -175,19 +211,18 @@ void test_Institution_select_will_filter_out_specific_type()
 	free(testList2);
 }
 
+
 void test_isUniversityCollege_will_return_according_to_the_input_parameters()
 {
 	Institution *element1 = malloc(sizeof(Institution));
-	InstitutionType tempType = College;
-	element1->type=University;
+	InstitutionType tempType = University;
+	element1->type=College;
 	int status;
 	status = isUniversityCollege(element1,&tempType);
 	TEST_ASSERT_EQUAL(0,status);
-	free(element1);
 	
 	
 	tempType = College;
-	element1->type=College;
 	status = isUniversityCollege(element1,&tempType);
 	TEST_ASSERT_EQUAL(1,status);
 	free(element1);

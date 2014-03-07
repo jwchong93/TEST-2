@@ -30,24 +30,23 @@ int Institution_reverse(LinkedList *inputList,Stack *elementStack, LinkedList *o
 
 int Institution_select(LinkedList *inputList,LinkedList *outputList,void *criterion,int(*compare)(void *,void *))
 {
+	int i =0;
 	Institution * tempElement;
 	int status;
 	if(inputList->head==NULL)
 	{
 		return 0;
 	}
-	
-	
 	tempElement = List_removeHead(inputList);
-	while(tempElement !=NULL)
+	while(tempElement != NULL)
 	{
-		status = compare(tempElement,criterion);
-		if(status==1)
+		if(compare(tempElement,criterion))
 		{
 			List_addTail(outputList,tempElement);
 		}
 		tempElement = List_removeHead(inputList);
 	}
+	
 	
 }
 
