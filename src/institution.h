@@ -5,7 +5,7 @@
 #include "Stack.h"
 
 typedef enum {Unknown, University,UniversityCollege,College} InstitutionType;
-
+typedef enum {INVALID_YEAR}Error;
 typedef struct Institution_t
 {
 	char * name;
@@ -19,6 +19,7 @@ typedef struct Institution_t
 
 int Institution_reverse(LinkedList *inputList,Stack *elementStack, LinkedList *outputList);
 int isUniversityCollege(void *elem1,void *type);
+int wasEstablishedBefore(void *elem1,void *year);
 int Institution_select(LinkedList *inputList,
 						LinkedList *outputList,
 						void *criterion,

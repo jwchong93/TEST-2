@@ -10,19 +10,19 @@ int Institution_reverse(LinkedList *inputList,Stack *elementStack, LinkedList *o
 		return 0;
 	}
 	tempElement = List_removeHead(inputList);
-	do
+	while(tempElement !=NULL)
 	{
 		Stack_push(elementStack,tempElement);
 		tempElement = List_removeHead(inputList);
-	}while(tempElement !=NULL);
+	}
 
-	
 	tempElement = Stack_pop(elementStack);	
 	do
 	{
 		List_addTail(outputList,tempElement);
 		tempElement = Stack_pop(elementStack);
 	}while(tempElement!=NULL);
+
 	
 	return 1;
 	
@@ -63,4 +63,15 @@ int isUniversityCollege(void *elem1,void *type)
 	{
 		return 0;
 	}
+}
+
+int wasEstablishedBefore(void *elem1,void *year)
+{
+	Institution *element1=(Institution*)elem1;
+	int *referenceYear = (int*)year; 
+	if(element1->yearEstablished==*referenceYear)
+	{
+		return 1;
+	}
+	return 0;
 }
