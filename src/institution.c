@@ -1,5 +1,6 @@
 #include "institution.h"
 #include <stdio.h>
+#include "CException.h"
 
 int Institution_reverse(LinkedList *inputList,Stack *elementStack, LinkedList *outputList)
 {
@@ -33,11 +34,14 @@ int Institution_select(LinkedList *inputList,LinkedList *outputList,void *criter
 	int i =0;
 	Institution * tempElement;
 	int status;
+	Error exception;
 	if(inputList->head==NULL)
 	{
 		return 0;
 	}
 	tempElement = List_removeHead(inputList);
+	Try
+	{
 	while(tempElement != NULL)
 	{
 		if(compare(tempElement,criterion))
@@ -45,6 +49,11 @@ int Institution_select(LinkedList *inputList,LinkedList *outputList,void *criter
 			List_addTail(outputList,tempElement);
 		}
 		tempElement = List_removeHead(inputList);
+	}
+	}
+	Catch(exception)
+	{
+		Throw(exception);
 	}
 	
 	
@@ -69,6 +78,11 @@ int wasEstablishedBefore(void *elem1,void *year)
 {
 	Institution *element1=(Institution*)elem1;
 	int *referenceYear = (int*)year; 
+	if(element1->yearEstablished >2014)
+	{
+		Throw(INVALID_YEAR);
+		return 0;
+	}
 	if(element1->yearEstablished==*referenceYear)
 	{
 		return 1;
