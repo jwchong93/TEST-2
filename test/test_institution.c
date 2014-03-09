@@ -128,6 +128,8 @@ void test_Institution_select_will_filter_out_specific_type()
 	
 	Institution element1,element2,element3,element4;
 	
+	int numberOfInstitution=0;
+	
 	element1.type=UniversityCollege;
 	element2.type=College;
 	element3.type=University;
@@ -142,7 +144,8 @@ void test_Institution_select_will_filter_out_specific_type()
 	List_removeHead_ExpectAndReturn(&testList1,NULL);
 
 	
-	Institution_select(&testList1,&testList2,&type,isUniversityCollege);
+	numberOfInstitution = Institution_select(&testList1,&testList2,&type,isUniversityCollege);
+	TEST_ASSERT_EQUAL(1,numberOfInstitution);
 	
 	
 	//Increase the element to three.
@@ -155,7 +158,8 @@ void test_Institution_select_will_filter_out_specific_type()
 	List_removeHead_ExpectAndReturn(&testList1,NULL);
 
 	
-	Institution_select(&testList1,&testList2,&type,isUniversityCollege);
+	numberOfInstitution = Institution_select(&testList1,&testList2,&type,isUniversityCollege);
+	TEST_ASSERT_EQUAL(1,numberOfInstitution);
 	
 	
 	//Increase to four.
@@ -170,13 +174,16 @@ void test_Institution_select_will_filter_out_specific_type()
 	List_removeHead_ExpectAndReturn(&testList1,NULL);
 
 	
-	Institution_select(&testList1,&testList2,&type,isUniversityCollege);
+	numberOfInstitution = Institution_select(&testList1,&testList2,&type,isUniversityCollege);
+	
+	TEST_ASSERT_EQUAL(2,numberOfInstitution);
 }
 
 void test_Institution_select_the_institution_that_establish_before_1980()
 {
 
 	LinkedList testList1,testList2;
+	int numberOfInstitution=0;
 	int year = 1980;
 	Institution elems[]={{.yearEstablished = 1980}};
 
@@ -185,7 +192,8 @@ void test_Institution_select_the_institution_that_establish_before_1980()
 	List_removeHead_ExpectAndReturn(&testList1,NULL);
 
 	
-	Institution_select(&testList1,&testList2,&year,wasEstablishedBefore);
+	numberOfInstitution = Institution_select(&testList1,&testList2,&year,wasEstablishedBefore);
+	TEST_ASSERT_EQUAL(1,numberOfInstitution);
 
 }
 
@@ -193,6 +201,7 @@ void test_Institution_select_the_institution_that_establish_before_1980_for_2_in
 {
 
 	LinkedList testList1,testList2;
+	int numberOfInstitution=0;
 	int year = 1980;
 	Institution elems[]={{.yearEstablished = 1980},
 						{.yearEstablished = 1988}};
@@ -203,8 +212,8 @@ void test_Institution_select_the_institution_that_establish_before_1980_for_2_in
 	List_removeHead_ExpectAndReturn(&testList1,NULL);
 
 	
-	Institution_select(&testList1,&testList2,&year,wasEstablishedBefore);
-	
+	numberOfInstitution = Institution_select(&testList1,&testList2,&year,wasEstablishedBefore);
+	TEST_ASSERT_EQUAL(1,numberOfInstitution);
 }
 
 
@@ -212,6 +221,7 @@ void test_Institution_select_the_institution_that_establish_before_1980_for_3_in
 {
 
 	LinkedList testList1,testList2;
+	int numberOfInstitution=0;
 	int year = 1980;
 	Institution elems[]={{.yearEstablished = 1989},
 						{.yearEstablished = 1980},
@@ -224,7 +234,8 @@ void test_Institution_select_the_institution_that_establish_before_1980_for_3_in
 	List_removeHead_ExpectAndReturn(&testList1,NULL);
 
 	
-	Institution_select(&testList1,&testList2,&year,wasEstablishedBefore);
+	numberOfInstitution = Institution_select(&testList1,&testList2,&year,wasEstablishedBefore);
+	TEST_ASSERT_EQUAL(1,numberOfInstitution);
 	
 }
 
@@ -235,6 +246,7 @@ void test_Institution_select_the_institution_that_establish_before_1980_for_10_i
 
 
 	LinkedList testList1,testList2;
+	int numberOfInstitution=0;
 	int year = 1980;
 	Institution elems[]={{.yearEstablished = 1989},
 						{.yearEstablished = 1980},
@@ -263,7 +275,8 @@ void test_Institution_select_the_institution_that_establish_before_1980_for_10_i
 	List_removeHead_ExpectAndReturn(&testList1,NULL);
 
 	
-	Institution_select(&testList1,&testList2,&year,wasEstablishedBefore);
+	numberOfInstitution = Institution_select(&testList1,&testList2,&year,wasEstablishedBefore);
+	TEST_ASSERT_EQUAL(3,numberOfInstitution);
 	
 }
 
@@ -287,7 +300,7 @@ void test_wasEstablishedBefore_will_throw_an_eror_if_in_input_year_invalid()
 	
 	Try
 	{
-	Institution_select(&testList1,&testList2,&year,wasEstablishedBefore);
+		Institution_select(&testList1,&testList2,&year,wasEstablishedBefore);
 	}
 	Catch(Exception)
 	{

@@ -47,6 +47,7 @@ int Institution_select(LinkedList *inputList,LinkedList *outputList,void *criter
 		if(compare(tempElement,criterion))
 		{
 			List_addTail(outputList,tempElement);
+			i++;
 		}
 		tempElement = List_removeHead(inputList);
 	}
@@ -55,6 +56,8 @@ int Institution_select(LinkedList *inputList,LinkedList *outputList,void *criter
 	{
 		Throw(exception);
 	}
+	
+	return i;
 	
 	
 }
